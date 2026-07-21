@@ -1,8 +1,10 @@
+AntiFeatures:
+  NonFreeNet:
+    en-US: Rely on YouTube.
 Categories:
   - Multimedia
   - Reading
 License: GPL-3.0-or-later
-WebSite: https://github.com/deedeedev/YtReader
 SourceCode: https://github.com/deedeedev/YtReader
 IssueTracker: https://github.com/deedeedev/YtReader/issues
 
@@ -15,7 +17,7 @@ Binaries: https://github.com/deedeedev/YtReader/releases/download/v%v/app-releas
 Builds:
   - versionName: 0.8.5
     versionCode: 8006
-    commit: dda399754ab197ef507f7c3dd457315828941d5a
+    commit: a09a4fc55864db76be5cd2155a8cd1d6c5cadc6b
     subdir: app
     gradle:
       - yes
