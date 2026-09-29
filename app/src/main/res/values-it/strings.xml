@@ -12,6 +12,13 @@
     <string name="bookmark_saved">Segnalibro salvato.</string>
     <string name="bookmark_deleted">Segnalibro eliminato.</string>
     <string name="cancel">Annulla</string>
+    <string name="chat_error_missing_config">L\'AI non è configurato. Imposta endpoint AI, chiave API AI e modello AI nelle Impostazioni.</string>
+    <string name="chat_error_request_failed">Richiesta non riuscita (HTTP %1$d).</string>
+    <string name="chat_error_empty_response">Il modello ha restituito una risposta vuota.</string>
+    <string name="chat_error_network">Richiesta non riuscita: %1$s</string>
+    <string name="chat_input_hint">Chiedi qualcosa su questa trascrizione</string>
+    <string name="chat_send">Invia messaggio</string>
+    <string name="chat_transcript_attachment">trascrizione.txt</string>
     <string name="channel_unknown">Canale sconosciuto</string>
     <string name="clear_search">Cancella ricerca</string>
     <string name="collection">Collezione</string>
@@ -123,6 +130,7 @@
     <string name="matching_subtitle_not_found">Sottotitolo corrispondente non trovato</string>
     <string name="note_removed">Nota rimossa.</string>
     <string name="note_saved">Nota salvata.</string>
+    <string name="open_chat">Apri chat</string>
     <string name="reader_add_bookmark">Aggiungi segnalibro</string>
     <string name="reader_ai_cleaned_text">Testo pulito AI</string>
     <string name="reader_apply">Applica</string>
@@ -199,6 +207,7 @@
     <string name="local_clean_remove_mid_sentence_line_breaks">Rimuovi interruzioni riga</string>
     <string name="local_clean_replace_line_breaks_with_space">Sostituisci interruzioni con spazio</string>
     <string name="save">Salva</string>
+    <string name="screen_chat">Chat</string>
     <string name="screen_reader">Lettore</string>
     <string name="screen_search">Ricerca</string>
     <string name="screen_settings">Impostazioni</string>

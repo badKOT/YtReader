@@ -3,6 +3,7 @@ package com.deedeedev.ytreader
 import android.content.Context
 import androidx.room.Room
 import com.deedeedev.ytreader.data.AiCleaningRepository
+import com.deedeedev.ytreader.data.ChatRepository
 import com.deedeedev.ytreader.data.CollectionRepository
 import com.deedeedev.ytreader.data.NoteRepository
 import com.deedeedev.ytreader.data.SearchHistoryRepository
@@ -39,6 +40,7 @@ interface AppContainer : StringProvider {
     val userPreferencesRepository: UserPreferencesRepository
     val collectionRepository: CollectionRepository
     val aiCleaningRepository: AiCleaningRepository
+    val chatRepository: ChatRepository
     val subtitleRepository: SubtitleRepository
     val videoRepository: VideoRepository
     val noteRepository: NoteRepository
@@ -139,6 +141,10 @@ class DefaultAppContainer(
 
     override val aiCleaningRepository: AiCleaningRepository by lazy {
         AiCleaningRepository(context.applicationContext, aiOkHttpClient)
+    }
+
+    override val chatRepository: ChatRepository by lazy {
+        ChatRepository(aiOkHttpClient)
     }
 
     override val subtitleRepository: SubtitleRepository by lazy {

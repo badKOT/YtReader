@@ -99,6 +99,7 @@ internal fun ReaderScreen(
     initialHighlightRange: Pair<Int, Int>? = null,
     initialBookmarkStart: Int? = null,
     onOpenVideoNotes: (String, JumpBackState?) -> Unit,
+    onOpenChat: (Long) -> Unit = {},
     onNavigateToReaderLocation: (ReaderLocation) -> Unit,
     onInitialNavigationConsumed: () -> Unit,
     onChromeReady: () -> Unit,
@@ -131,7 +132,8 @@ internal fun ReaderScreen(
     ReaderSystemBarsEffect(
         activity = activity,
         view = view,
-        isDarkTheme = isDarkTheme
+        isDarkTheme = isDarkTheme,
+        isImmersive = !isUiVisible
     )
 
     if (uiState.isLoading || subtitle == null) {
@@ -1440,6 +1442,7 @@ internal fun ReaderScreen(
         },
         hasTimestampedSegments = originalSegments.isNotEmpty(),
         onShowJumpToTime = { showJumpToTimeDialog = true },
+        onOpenChat = { onOpenChat(subtitleId) },
         isAiCleaning = uiState.isAiCleaning,
         showSelectionToolbar = showSelectionToolbar,
         onSelectionColorSelected = { color ->

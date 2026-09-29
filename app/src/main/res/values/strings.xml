@@ -12,6 +12,13 @@
     <string name="bookmark_saved">Bookmark saved.</string>
     <string name="bookmark_deleted">Bookmark deleted.</string>
     <string name="cancel">Cancel</string>
+    <string name="chat_error_missing_config">AI is not configured. Set AI Endpoint, AI API key and AI Model in Settings.</string>
+    <string name="chat_error_request_failed">Request failed (HTTP %1$d).</string>
+    <string name="chat_error_empty_response">The model returned an empty response.</string>
+    <string name="chat_error_network">Request failed: %1$s</string>
+    <string name="chat_input_hint">Ask about this transcript</string>
+    <string name="chat_send">Send message</string>
+    <string name="chat_transcript_attachment">transcript.txt</string>
     <string name="channel_unknown">Unknown Channel</string>
     <string name="clear_search">Clear search</string>
     <string name="collection">Collection</string>
@@ -123,6 +130,7 @@
     <string name="matching_subtitle_not_found">Matching subtitle not found</string>
     <string name="note_removed">Note removed.</string>
     <string name="note_saved">Note saved.</string>
+    <string name="open_chat">Open chat</string>
     <string name="reader_add_bookmark">Add bookmark</string>
     <string name="reader_ai_cleaned_text">AI cleaned text</string>
     <string name="reader_apply">Apply</string>
@@ -199,6 +207,7 @@
     <string name="local_clean_remove_mid_sentence_line_breaks">Remove mid-sentence line breaks</string>
     <string name="local_clean_replace_line_breaks_with_space">Replace line breaks with space</string>
     <string name="save">Save</string>
+    <string name="screen_chat">Chat</string>
     <string name="screen_reader">Reader</string>
     <string name="screen_search">Search</string>
     <string name="screen_settings">Settings</string>

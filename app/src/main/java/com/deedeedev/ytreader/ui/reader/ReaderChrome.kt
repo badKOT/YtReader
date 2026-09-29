@@ -154,6 +154,7 @@ internal fun ReaderBottomBar(
     onRequestNotificationPermission: (String) -> Unit,
     hasTimestampedSegments: Boolean,
     onShowJumpToTime: () -> Unit,
+    onOpenChat: () -> Unit = {},
     useWebView: Boolean = false,
     onEditUnavailable: (() -> Unit)? = null
 ) {
@@ -179,6 +180,7 @@ internal fun ReaderBottomBar(
     val aiCleaningRunningLabel = stringResource(R.string.ai_cleaning_running_menu_label)
     val jumpToTimeLabel = stringResource(R.string.reader_jump_to_time)
     val cleaningSubmenuLabel = stringResource(R.string.cleaning_submenu)
+    val openChatLabel = stringResource(R.string.open_chat)
     var showFontMenu by remember { mutableStateOf(false) }
     var showOverflowMenu by remember { mutableStateOf(false) }
     var showCleaningSubmenu by remember { mutableStateOf(false) }
@@ -284,7 +286,7 @@ internal fun ReaderBottomBar(
                                     onShareText(currentText)
                                 }
                             )
-if (!isOriginalMode) {
+                            if (!isOriginalMode) {
                                 DropdownMenuItem(
                                     text = { Text(shareTextLabel) },
                                     onClick = {
@@ -293,6 +295,13 @@ if (!isOriginalMode) {
                                     }
                                 )
                             }
+                            DropdownMenuItem(
+                                text = { Text(openChatLabel) },
+                                onClick = {
+                                    showOverflowMenu = false
+                                    onOpenChat()
+                                }
+                            )
                             if (!(isEditing && !isOriginalMode)) {
                                 DropdownMenuItem(
                                     text = { Text(findLabel) },

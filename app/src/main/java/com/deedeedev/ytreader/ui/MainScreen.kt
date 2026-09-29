@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.History
@@ -39,6 +40,7 @@ import com.deedeedev.ytreader.AppContainer
 import com.deedeedev.ytreader.R
 import com.deedeedev.ytreader.ui.annotations.AnnotationsScreen
 import com.deedeedev.ytreader.ui.annotations.AnnotationsViewModel
+import com.deedeedev.ytreader.ui.chat.ChatScreen
 import com.deedeedev.ytreader.ui.home.SearchViewModel
 import com.deedeedev.ytreader.ui.home.LibraryViewModel
 import com.deedeedev.ytreader.ui.home.CollectionsViewModel
@@ -102,6 +104,9 @@ sealed class Screen(
         }
     }
     object VideoNotes : Screen("video_notes/{videoId}", R.string.highlights_and_notes, Icons.AutoMirrored.Filled.MenuBook)
+    object Chat : Screen("chat/{subtitleId}", R.string.screen_chat, Icons.AutoMirrored.Filled.Chat) {
+        fun createRoute(subtitleId: Long): String = "chat/$subtitleId"
+    }
 }
 
 private const val TAG = "MainScreen"
@@ -203,9 +208,9 @@ fun MainScreen(
         bottomBar = {
             val currentDestination = navBackStackEntry?.destination
 
-            // Hide bottom bar on Reader and Settings sub-screens
+            // Hide bottom bar on Reader, Chat and Settings sub-screens
             val showBottomBar = currentRoute?.let {
-                !it.startsWith("reader") && !it.startsWith("settings/")
+                !it.startsWith("reader") && !it.startsWith("chat") && !it.startsWith("settings/")
             } ?: true
 
             if (showBottomBar) {
@@ -232,10 +237,11 @@ fun MainScreen(
         }
     ) { innerPadding ->
         val isReaderRoute = currentRoute?.startsWith("reader") == true
+        val isChatRoute = currentRoute?.startsWith("chat") == true
         NavHost(
             navController = navController,
             startDestination = Screen.Library.route,
-            modifier = if (isReaderRoute) Modifier else Modifier.padding(innerPadding)
+            modifier = if (isReaderRoute || isChatRoute) Modifier else Modifier.padding(innerPadding)
         ) {
             composable(
                 route = Screen.Search.route,
@@ -468,6 +474,11 @@ fun MainScreen(
                             launchSingleTop = true
                         }
                     },
+                    onOpenChat = { chatSubtitleId ->
+                        navController.navigate(Screen.Chat.createRoute(chatSubtitleId)) {
+                            launchSingleTop = true
+                        }
+                    },
                     onNavigateToReaderLocation = { location ->
                         pendingReaderInitialLocation = location
                         pendingReaderJumpBackState = null
@@ -484,6 +495,22 @@ fun MainScreen(
                         pendingReaderJumpBackState = null
                     },
                     onChromeReady = {},
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = Screen.Chat.route,
+                arguments = listOf(navArgument("subtitleId") { type = NavType.LongType }),
+                enterTransition = { null },
+                exitTransition = { null },
+                popEnterTransition = { null },
+                popExitTransition = { null }
+            ) { backStackEntry ->
+                val chatSubtitleId = backStackEntry.arguments?.getLong("subtitleId") ?: return@composable
+
+                ChatScreen(
+                    appContainer = appContainer,
+                    subtitleId = chatSubtitleId,
                     onBack = { navController.popBackStack() }
                 )
             }

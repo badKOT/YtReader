@@ -187,13 +187,15 @@ internal fun ReaderCoreEffects(
 internal fun ReaderSystemBarsEffect(
     activity: Activity?,
     view: android.view.View,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    isImmersive: Boolean
 ) {
     val window = activity?.window
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(Unit) {
-        if (window != null) {
+    LaunchedEffect(isImmersive, isDarkTheme) {
+        if (window == null) return@LaunchedEffect
+        if (isImmersive) {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -207,9 +209,40 @@ internal fun ReaderSystemBarsEffect(
                 or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             )
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = android.view.View.SYSTEM_UI_FLAG_VISIBLE
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.let { controller ->
+                    if (isDarkTheme) {
+                        controller.setSystemBarsAppearance(
+                            0,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                        )
+                    } else {
+                        controller.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                        )
+                    }
+                }
+            }
         }
+    }
+
+    LaunchedEffect(isImmersive, isDarkTheme) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            if (window != null) {
+            if (window != null && isImmersive) {
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+                )
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility = (
                     android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

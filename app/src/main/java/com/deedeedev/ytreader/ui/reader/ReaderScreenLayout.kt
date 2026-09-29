@@ -97,6 +97,7 @@ internal fun ReaderScreenMainLayer(
     onRequestNotificationPermission: (String) -> Unit,
     hasTimestampedSegments: Boolean,
     onShowJumpToTime: () -> Unit,
+    onOpenChat: () -> Unit = {},
     isAiCleaning: Boolean,
     showSelectionToolbar: Boolean,
     onSelectionColorSelected: (HighlightColor) -> Unit,
@@ -314,6 +315,7 @@ internal fun ReaderScreenMainLayer(
             onRequestNotificationPermission = onRequestNotificationPermission,
             hasTimestampedSegments = hasTimestampedSegments,
             onShowJumpToTime = onShowJumpToTime,
+            onOpenChat = onOpenChat,
             useWebView = useWebView,
             onEditUnavailable = {
                 onRequestAction(PendingAction.ShowWebViewEditUnavailable)
